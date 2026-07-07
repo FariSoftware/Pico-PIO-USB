@@ -4,6 +4,32 @@ USB host/device implementation using PIO of raspberry pi pico (RP2040).
 
 You can add additional USB port to RP2040.
 
+## Fork notice
+
+This fork carries fixes for **host-mode core hangs and silent device loss**
+(upstream issues [#197](https://github.com/sekigon-gonnoc/Pico-PIO-USB/issues/197),
+[#203](https://github.com/sekigon-gonnoc/Pico-PIO-USB/issues/203),
+[#192](https://github.com/sekigon-gonnoc/Pico-PIO-USB/issues/192)) on branch
+`fix/host-busy-wait-hangs`, submitted upstream as a pull request.
+
+Use the stable tag `hostfix-1` rather than the branch — the branch may be
+rebased or removed once the fixes are merged upstream.
+
+**PlatformIO:**
+
+```ini
+lib_deps =
+    https://github.com/FariSoftware/Pico-PIO-USB.git#hostfix-1
+```
+
+**Pico-SDK / CMake:** add this repository at tag `hostfix-1` as a submodule
+in place of upstream.
+
+Tested: RP2040 @ 240 MHz, full-speed USB MIDI host under continuous
+verified traffic — 62 h / 6.4 M packets without a hang (unpatched: hard
+core hang within ~20 minutes, plus ~1 silent device loss per 2 h).
+Low-speed devices and RP2350 are untested.
+
 ## Demo
 
 https://user-images.githubusercontent.com/43873124/146642806-bdf34af6-4342-4a95-bfca-229cdc4bdca2.mp4
